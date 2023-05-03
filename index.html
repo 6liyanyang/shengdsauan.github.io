@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>五一假期作业</title>
+    <script src="layui.js"></script>
+    <!-- 引入 layui.css -->
+    <link rel="stylesheet" href="layui.css" />
+    <!-- 引入 jQuery.js -->
+    <script src="jquery.js"></script>
+    <!-- 引入 echarts.js -->
+    <script src="echarts.min.js"></script>
+  </head>
+  <body>
+    <div id="box">
+      <div id="box-top">
+        <button id="addBtn">添加学生</button>
+        <button id="delAllBtn">批量删除</button>
+        <b>搜索：</b
+        ><input type="text" id="searchInput" placeholder="请输入学生名字" />
+        <button id="searchBtn">搜索</button>
+      </div>
+      <div id="box-middle">
+        <table>
+          <thead>
+            <tr>
+              <th rowspan="2" style="width: 80px">
+                <input type="checkbox" id="checkAll" />
+              </th>
+              <th rowspan="2" style="width: 94px">姓名</th>
+              <th style="width: 153px">3.31(周五)</th>
+              <th colspan="3" style="width: 243px">4.7(周五)</th>
+              <th style="width: 153px">4.14(周五)</th>
+              <th colspan="3" style="width: 243px">4.21(周五)</th>
+              <th rowspan="2">教学周期平均分</th>
+              <th rowspan="2">操作</th>
+            </tr>
+            <tr>
+              <th>机试成绩</th>
+              <th>笔试成绩</th>
+              <th>机试成绩</th>
+              <th>平均分</th>
+              <th>机试成绩</th>
+              <th>笔试成绩</th>
+              <th>机试成绩</th>
+              <th>平均分</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div id="box-echarts"></div>
+      <div id="box-save">
+        <div><b>名字：</b><input type="text" id="name" /></div>
+        <div><b>3.31机试成绩：</b><input type="text" id="grade1" /></div>
+        <div><b>4.7笔试成绩：</b><input type="text" id="grade2" /></div>
+        <div><b>4.7机试成绩：</b><input type="text" id="grade3" /></div>
+        <div><b>4.7平均分：</b><input type="text" id="grade4" /></div>
+        <div><b>4.14机试成绩：</b><input type="text" id="grade5" /></div>
+        <div><b>4.21笔试成绩：</b><input type="text" id="grade6" /></div>
+        <div><b>4.21机试成绩：</b><input type="text" id="grade7" /></div>
+        <div><b>4.21平均分：</b><input type="text" id="grade8" /></div>
+        <div id="box-save-btn">
+          <button id="saveBtn">确定</button>
+          <button class="celBtn">取消</button>
+        </div>
+      </div>
+      <div id="box-add">
+        <div>
+          <b>学生名字：</b
+          ><input type="text" placeholder="请输入学生名字" id="addName" />
+        </div>
+        <div id="box-add-btn">
+          <button id="addStuBtn">确定</button>
+          <button class="celBtn">取消</button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    let students = [
+      {
+        name: "李泽",
+        result: [
+          {
+            date: "3.31",
+            subject: [
+              {
+                name: "机试成绩",
+                grade: "99",
+              },
+              {
+                name: "笔试成绩",
+                grade: "0",
+              },
+              {
+                name: "平均分",
+                grade: "99",
+              },
+            ],
+          },
+          {
+            date: "4.7",
+            subject: [
+              {
+                name: "机试成绩",
+                grade: "100",
+              },
+              {
+                name: "笔试成绩",
+                grade: "38",
+              },
+              {
+                name: "平均分",
+                grade: "69",
+              },
+            ],
+          },
+          {
+            date: "4.14",
+            subject: [
+              {
+                name: "机试成绩",
+                grade: "70",
+              },
+              {
+                name: "笔试成绩",
+                grade: "0",
+              },
+              {
+                name: "平均分",
+                grade: "70",
+              },
+            ],
+          },
+          {
+            date: "4.21",
+            subject: [
+              {
+                name: "机试成绩",
+                grade: "92",
+              },
+              {
+                name: "笔试成绩",
+                grade: "50",
+              },
+              {
+                name: "平均分",
+                grade: "71",
+              },
+            ],
+          },
+        ],
+        avgGrade: "73.625",
+      },
+      {
+        name: "赵灿龙",
+        result: [
+          {
+            date: "3.31",
+            subject: [
+              {
+                name: "机试成绩",
+                grade: "90",
+              },
+              {
+                name: "笔试成绩",
+                grade: "0",
+              },
+              {
+                name: "平均分",
+                grade: "90",
+              },
+            ],
+          },
+          {
+            date: "4.7",
+            subject: [
+              {
+                name: "机试成绩",
+                grade: "70",
+              },
+              {
+                name: "笔试成绩",
+                grade: "51",
+              },
+              {
+                name: "平均分",
+                grade: "60.5",
+              },
+            ],
+          },
+          {
+            date: "4.14",
+            subject: [
+              {
+                name: "机试成绩",
+                grade: "65",
+              },
+              {
+                name: "笔试成绩",
+                grade: "0",
+              },
+              {
+                name: "平均分",
+                grade: "65",
+              },
+            ],
+          },
+          {
+            date: "4.21",
+            subject: [
+              {
+                name: "机试成绩",
+                grade: "50",
+              },
+              {
+                name: "笔试成绩",
+                grade: "29",
+              },
+              {
+                name: "平均分",
+                grade: "39.5",
+              },
+            ],
+          },
+        ],
+        avgGrade: "56.875",
+      },
+      {
+        name: "刘佳佳",
+        result: [
+          {
+            date: "3.31",
+            subject: [
+              {
+                name: "机试成绩",
+                grade: "75",
+              },
+              {
+                name: "笔试成绩",
+                grade: "0",
+              },
+              {
+                name: "平均分",
+                grade: "75",
+              },
+            ],
+          },
+          {
+            date: "4.7",
+            subject: [
+              {
+                name: "机试成绩",
+                grade: "79",
+              },
+              {
+                name: "笔试成绩",
+                grade: "45",
+              },
+              {
+                name: "平均分",
+                grade: "57.5",
+              },
+            ],
+          },
+          {
+            date: "4.14",
+            subject: [
+              {
+                name: "机试成绩",
+                grade: "70",
+              },
+              {
+                name: "笔试成绩",
+                grade: "0",
+              },
+              {
+                name: "平均分",
+                grade: "70",
+              },
+            ],
+          },
+          {
+            date: "4.21",
+            subject: [
+              {
+                name: "机试成绩",
+                grade: "50",
+              },
+              {
+                name: "笔试成绩",
+                grade: "60",
+              },
+              {
+                name: "平均分",
+                grade: "55",
+              },
+            ],
+          },
+        ],
+        avgGrade: "60.3125",
+      },
+    ];
+    var updIndex = 0;
+    var storageData;
+    $(document).ready(function () {
+      showList();
+      initEcharts();
+      changeColor();
+      if (localStorage.getItem("data") != null) {
+        storageData = localStorage.getItem("data");
+        showList(JSON.parse(storageData));
+        changeColor();
+      } else {
+        showList(students);
+      }
+    });
+    //查看列表
+    function showList(data = students) {
+      let html = "";
+      $(data).each((index, item) => {
+        html += `<tr>
+              <td><input type="checkbox" class="checkBox" dataIndex =${index} /></td>
+              <td>${item.name}</td>
+              <td>${item.result[0].subject[0].grade}</td>
+              <td>${item.result[1].subject[1].grade}</td>
+              <td>${item.result[1].subject[0].grade}</td>
+              <td>${item.result[1].subject[2].grade}</td>
+              <td>${item.result[2].subject[0].grade}</td>
+              <td>${item.result[3].subject[1].grade}</td>
+              <td>${item.result[3].subject[0].grade}</td>
+              <td>${item.result[3].subject[2].grade}</td>
+              <td>${item.avgGrade}</td>
+              <td>
+                <button class="delBtn" dataIndex =${index}>删除</button>
+                <button class="updBtn" dataIndex =${index}>编辑</button>
+                <button class="seeBtn" dataIndex =${index}>查看成绩图表</button>
+              </td>
+            </tr>`;
+      });
+      $("tbody").html(html);
+    }
+    //删除单个
+    $("tbody").on("click", 'button[class="delBtn"]', function () {
+      let delFlag = confirm("确认删除吗?");
+      if (delFlag == true) {
+        students.splice($(this).attr("dataIndex"), 1);
+        showList();
+      }
+    });
+    //全选
+    $("#checkAll").click(function () {
+      if ($(this).prop("checked")) {
+        $(".checkBox").prop("checked", true);
+      } else {
+        $(".checkBox").prop("checked", false);
+      }
+    });
+    //批量删除
+    $("#delAllBtn").click(function () {
+      let ids = [];
+      let delFlag = confirm("确认删除吗?");
+      if (delFlag == true) {
+        for (const item of $(".checkBox")) {
+          if ($(item).prop("checked")) {
+            ids.push($(item).attr("dataIndex"));
+          }
+        }
+        ids = ids.reverse();
+        for (const item of ids) {
+          students.splice(item, 1);
+        }
+        showList();
+        $("#checkAll").prop("checked", false);
+      }
+    });
+    //搜索
+    $("#searchBtn").click(function () {
+      let searchData = [];
+      for (const item of students) {
+        console.log(item);
+        if (item.name.includes($("#searchInput").val())) {
+          searchData.push(item);
+        }
+      }
+      showList(searchData);
+      searchData = [];
+    });
+    //添加
+    $("#addBtn").click(function () {
+      $("#box-add").css("display", "block");
+    });
+    //点击添加的确定按钮
+    $("#addStuBtn").click(function () {
+      let name = $("#addName").val();
+      let html = "";
+      html = {
+        name: name,
+        result: [
+          {
+            date: "3.31",
+            subject: [
+              {
+                name: "机试成绩",
+                grade: "0",
+              },
+              {
+                name: "笔试成绩",
+                grade: "0",
+              },
+              {
+                name: "平均分",
+                grade: "0",
+              },
+            ],
+          },
+          {
+            date: "4.7",
+            subject: [
+              {
+                name: "机试成绩",
+                grade: "0",
+              },
+              {
+                name: "笔试成绩",
+                grade: "0",
+              },
+              {
+                name: "平均分",
+                grade: "0",
+              },
+            ],
+          },
+          {
+            date: "4.14",
+            subject: [
+              {
+                name: "机试成绩",
+                grade: "0",
+              },
+              {
+                name: "笔试成绩",
+                grade: "0",
+              },
+              {
+                name: "平均分",
+                grade: "0",
+              },
+            ],
+          },
+          {
+            date: "4.21",
+            subject: [
+              {
+                name: "机试成绩",
+                grade: "0",
+              },
+              {
+                name: "笔试成绩",
+                grade: "0",
+              },
+              {
+                name: "平均分",
+                grade: "0",
+              },
+            ],
+          },
+        ],
+        avgGrade: "0",
+      };
+      students.push(html);
+      showList();
+      $("#box-add").css("display", "none");
+      $("#box-add input").val("");
+      storage();
+      changeColor();
+    });
+    //编辑
+    $("tbody").on("click", 'button[class="updBtn"]', function () {
+      $("#box-save").css("display", "block");
+      updIndex = $(this).attr("dataIndex");
+      let data = students[updIndex];
+      //回显
+      $("#name").val(data.name);
+      $("#grade1").val(data.result[0].subject[0].grade);
+      $("#grade2").val(data.result[1].subject[1].grade);
+      $("#grade3").val(data.result[1].subject[0].grade);
+      $("#grade4").val(data.result[1].subject[2].grade);
+      $("#grade5").val(data.result[2].subject[0].grade);
+      $("#grade6").val(data.result[3].subject[1].grade);
+      $("#grade7").val(data.result[3].subject[0].grade);
+      $("#grade8").val(data.result[3].subject[2].grade);
+    });
+    //点击编辑里面的确定
+    $("#saveBtn").click(function () {
+      students[updIndex].name = $("#name").val();
+      students[updIndex].result[0].subject[0].grade = $("#grade1").val();
+      students[updIndex].result[1].subject[1].grade = $("#grade2").val();
+      students[updIndex].result[1].subject[0].grade = $("#grade3").val();
+      students[updIndex].result[1].subject[2].grade = $("#grade4").val();
+      students[updIndex].result[2].subject[0].grade = $("#grade5").val();
+      students[updIndex].result[3].subject[1].grade = $("#grade6").val();
+      students[updIndex].result[3].subject[0].grade = $("#grade7").val();
+      students[updIndex].result[3].subject[2].grade = $("#grade8").val();
+      $("#box-save").css("display", "none");
+      $("#box-save input").val("");
+      showList();
+      changeColor();
+    });
+    //点击取消按钮
+    $(".celBtn").click(function () {
+      $("#box-save").css("display", "none");
+      $("#box-save input").val("");
+
+      $("#box-add").css("display", "none");
+      $("#box-add input").val("");
+    });
+    //50分以下红色90分以上紫色
+    function changeColor() {
+      for (const item of $("tbody td:gt(1)")) {
+        if ($(item).html() <= 50) {
+          $(item).css("background", "red");
+        } else if ($(item).html() >= 90) {
+          $(item).css("background", "purple");
+        }
+      }
+    }
+    //本地存储
+    function storage() {
+      localStorage.setItem("data", JSON.stringify(students));
+    }
+    //查看成绩图表
+    $("tbody").on("click", 'button[class="seeBtn"]', function () {
+      if ($(this).html() == "关闭成绩图表") {
+        $("#box-echarts").css("display", "none");
+        $(this).html("查看成绩图表");
+      } else {
+        $("#box-echarts").css("display", "block");
+        initEcharts($(this).attr("dataIndex"));
+        $(this).html("关闭成绩图表");
+      }
+    });
+    function initEcharts(echartsIndex = 0) {
+      var myChart = echarts.init(document.getElementById("box-echarts"));
+      option = {
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "cross",
+            crossStyle: {
+              color: "#999",
+            },
+          },
+        },
+        legend: {
+          data: ["机试", "笔试"],
+          top: "6%",
+        },
+        title: {
+          text: `${students[echartsIndex].name}的成绩柱状图`,
+          left: "center",
+        },
+        xAxis: { type: "category", data: xData(echartsIndex) },
+        yAxis: [
+          {
+            type: "value",
+            name: "成绩",
+            min: 0,
+            max: 100,
+            interval: 10,
+            axisLabel: {
+              formatter: "{value} 分",
+            },
+          },
+          {
+            type: "value",
+            name: "教学周期平均分",
+            min: 0,
+            max: 100,
+            interval: 25,
+            axisLabel: {
+              formatter: "{value} 分",
+            },
+          },
+        ],
+        series: getgrade(echartsIndex),
+      };
+      option && myChart.setOption(option);
+    }
+    //获取X轴的数据
+    function xData(echartsIndex) {
+      let res = students[echartsIndex].result.map((item, index) => {
+        return item.date;
+      });
+      return res;
+    }
+    //获取成绩
+    function getgrade(echartsIndex) {
+      let jishigrade = students[echartsIndex].result.map((item) => {
+        return item.subject.filter((item) => {
+          return item.name == "机试成绩";
+        })[0].grade;
+      });
+      let bishigrade = students[echartsIndex].result.map((item) => {
+        return item.subject.filter((item) => {
+          return item.name == "笔试成绩";
+        })[0].grade;
+      });
+      let pingjungrade = students[echartsIndex].result.map((item) => {
+        return item.subject.filter((item) => {
+          return item.name == "平均分";
+        })[0].grade;
+      });
+      return [
+        {
+          label: {
+            show: true,
+            position: "top",
+          },
+          data: jishigrade,
+          name: "机试",
+          type: "bar",
+          itemStyle: {
+            normal: {
+              color: function (item) {
+                var indexColor = item.value;
+                if (indexColor <= 50) {
+                  return "red";
+                } else {
+                  return "blue";
+                }
+              },
+            },
+          },
+        },
+        {
+          label: {
+            show: true,
+            position: "top",
+          },
+          data: bishigrade,
+          name: "笔试",
+          type: "bar",
+          itemStyle: {
+            normal: {
+              color: function (item) {
+                var indexColor = item.value;
+                if (indexColor <= 50) {
+                  return "red";
+                } else {
+                  return "green";
+                }
+              },
+            },
+          },
+        },
+        {
+          name: "教学周期分均分",
+          type: "line",
+          yAxisIndex: 1,
+          tooltip: {
+            valueFormatter: function (value) {
+              return value + " 分";
+            },
+          },
+          data: pingjungrade,
+        },
+      ];
+    }
+  </script>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="./jquery-3.6.1.min.js"></script>
+  </head>
+  <style>
+    tr:hover {
+      /* color: #fff; */
+      text-align: center;
+      /* background: pink; */
+    }
+    tr {
+      /* color: #fff; */
+      text-align: center;
+      border: 1px solid gray;
+      /* background: lightblue; */
+    }
+    #trr {
+      display: none;
+    }
+    .res {
+      display: none;
+    }
+  </style>
+  姓名：<input type="text" id="names" /><br /><br />年龄：
+  <input type="text" id="ages" /><br /><br />
+  <button id="BTN">添加</button>
+  <button id="del">批量删除</button>
+  <br /><br />
+  <table border="2" style="width: 100%; margin: 0 auto; border: none">
+    <thead>
+      <tr>
+        <th><input type="checkbox" id="quan" /></th>
+        <th>排名</th>
+        <th>#</th>
+        <th>姓名</th>
+        <th>年纪</th>
+        <th>更新时间</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <body>
+    <script>
+      $(function () {
+        render();
+        $("tbody").click(tbodyFun);
+        $("#quan").change(quanFun);
+        $("#BTN").click(BTNFun);
+      });
+
+      var stuArr = [
+        {
+          name: "小帅",
+          age: "18",
+        },
+      ];
+      let trAll;
+      var flag = true;
+      function BTNFun() {
+        if (flag) {
+          let obj = {
+            name: names.value,
+            age: ages.value,
+          };
+          stuArr.push(obj);
+          render();
+          // console.log((trAll = $("tbody tr").not($('tbody tr[id="trr"]'))));
+        } else {
+          stuArr[indexs].name = names.value;
+          stuArr[indexs].age = ages.value;
+          flag = true;
+          $("#BTN").html("添加");
+        }
+        render();
+      }
+      function render() {
+        var strHTML = "";
+        stuArr.forEach((item, index) => {
+          strHTML += `<tr>
+  <td><input type="checkbox"/></td>
+  <td>${index + 1}</td>
+  <td><button onclick='aaaFun(${index})'>打开 </button><button onclick='bbbFun(${index})'>关闭 </button></td>
+<td>${item.name}</td>
+<td>${item.age}</td>
+<td>${getDate(item.updated_at)}</td>
+<td>
+ <button dataIndex='${index}'>删除</button>
+<button zhi='${index}'>移动</button>
+<button  title='${index}'>修改</button>
+</td>
+</tr>
+
+<tr  id='trr'>
+    <td></td>
+                <td >ID</td>
+                    <td>${index + 1}</td>
+                    <td >姓名</td>
+                    <td>${item.name}</td>
+                    <td>年龄</td>
+                    <td>${item.age}</td>
+                    <td >更新时间</td>
+                    <td>${getDate(item.updated_at)}</td>
+
+    </tr>
+`;
+        });
+        $("tbody").html(strHTML);
+        $(".bb").css("border", "1px solid black");
+        $(".bb td").css("width", "250px");
+        $(".bb td").css("border", "1px solid black");
+      }
+
+      function aaaFun(e) {
+        trAll = $("tbody tr").not($('tbody tr[id="trr"]'));
+        $(trAll).eq(e).next().show();
+      }
+      function bbbFun(e) {
+        trAll = $("tbody tr").not($('tbody tr[id="trr"]'));
+        $(trAll).eq(e).next().hide();
+      }
+
+      function getDate() {
+        let updated_a = new Date();
+        return (
+          updated_a.getFullYear() +
+          "-" +
+          (updated_a.getMonth() + 1) +
+          "-" +
+          updated_a.getDate() +
+          " " +
+          updated_a.getHours() +
+          ":" +
+          updated_a.getMinutes() +
+          ":" +
+          updated_a.getSeconds()
+        );
+      }
+      var indexs = null;
+      function tbodyFun(e) {
+        if (e.target.innerHTML == "删除") {
+          if (confirm("确定删除吗")) {
+            let index = e.target.getAttribute("dataIndex");
+            stuArr.splice(index, 1);
+            render();
+          }
+        }
+        if (e.target.innerHTML == "移动") {
+          let index = e.target.getAttribute("zhi");
+          let tmp = stuArr[index];
+          stuArr.splice(index, 1);
+          stuArr.unshift(tmp);
+          render();
+        }
+        if (e.target.innerHTML == "修改") {
+          indexs = e.target.title;
+          names.value = stuArr[indexs].name;
+          ages.value = stuArr[indexs].age;
+          flag = false;
+          $("#BTN").html("确认修改");
+          render();
+        }
+      }
+      function quanFun() {
+        $("input:checkbox:gt(0)").change(inpFun);
+        $("input:checkbox:gt(0)").prop("checked", this.checked);
+      }
+      function inpFun() {
+        var len = $("input:checkbox:gt(0)").length;
+        if (len == 0) {
+          var arr = false;
+        } else {
+          arr = $(":checked").not("#quan").length == len ? true : false;
+        }
+        $("#quan:checkbox").prop("checked", arr);
+      }
+    </script>
+  </body>
+</html>
