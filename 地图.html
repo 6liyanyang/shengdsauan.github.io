@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 ,user-scalable=no" />
+    <title>Document</title>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <style>
+      #box {
+        width: 800px;
+        height: 800px;
+      }
+      .amap-icon img,
+      .amap-marker-content img {
+        width: 25px;
+        height: 34px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box"></div>
+  </body>
+  <script type="text/javascript">
+    window._AMapSecurityConfig = {
+      sercurityJsCode: '7aaaba2b178aeaa2b1385c12f3433e91',
+    }
+  </script>
+  <script
+    type="text/javascript"
+    src="https://webapi.amap.com/maps?v=2.0&key=944b4a5b812242d23e69b72af75e3bda"></script>
+  <script type="text/javascript">
+    var marker,
+      map = new AMap.Map('box', {
+        resizeEnable: true,
+        center: [113.427781, 34.765599 ],
+        zoom: 15,
+        viewMode: '3D',
+      })
+
+    function addMarker() {
+      marker = new AMap.Marker({
+        icon: '//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png',
+        position: [113.427781, 34.765599 ],
+        offset: new AMap.Pixel(-13, -30),
+      })
+      marker.setMap(map)
+    }
+    addMarker()
+  </script>
+</html>
