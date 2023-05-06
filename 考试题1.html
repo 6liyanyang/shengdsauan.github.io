@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Swiper demo</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
+    />
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="./swiper-bundle.min.css" />
+    <script src="./jquery.js"></script>
+
+    <!-- Demo styles -->
+    <style>
+      html,
+      body {
+        position: relative;
+        height: 100%;
+      }
+
+      body {
+        background: #131313;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color: #000;
+        margin: 0;
+        padding: 0;
+      }
+
+      .swiper {
+        width: 100%;
+        height: 100%;
+      }
+
+      .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #131313;
+
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+
+      .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      body {
+        background: #000;
+        color: #000;
+      }
+
+      .swiper {
+        width: 100%;
+        height: 300px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .swiper-slide {
+        background-size: cover;
+        background-position: center;
+      }
+
+      .mySwiper2 {
+        height: 80%;
+        width: 100%;
+      }
+
+      .mySwiper {
+        height: 20%;
+        box-sizing: border-box;
+        padding: 10px 0;
+      }
+
+      .mySwiper .swiper-slide {
+        width: 25%;
+        height: 100%;
+        opacity: 0.4;
+      }
+
+      .mySwiper .swiper-slide-thumb-active {
+        opacity: 1;
+      }
+
+      .swiper-slide img {
+        display: block;
+        width: 60%;
+        height: 60%;
+        object-fit: cover;
+      }
+      #p1 {
+        color: white;
+        position: absolute;
+        bottom: 550px;
+        right: 1000px;
+      }
+      #p2 {
+        color: white;
+        position: absolute;
+        top: 100px;
+      }
+      #d1 {
+        width: 500px;
+        height: 60px;
+        position: absolute;
+        top: 530px;
+      }
+      button {
+        width: 150px;
+        height: 40px;
+        border-radius: 10px;
+      }
+      #box1{
+        width: 300px;
+        height: 30px;
+      }
+      a{
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Swiper -->
+
+    <div
+      style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+      class="swiper mySwiper2"
+    >
+    <div id="box1">  
+<a href="./考试题2.html">
+考试题2
+</a>&emsp;&emsp;&emsp;
+<a href="./考试题3.html">考试题3</a>
+    </div>
+      <div class="swiper-wrapper">
+  
+        <div class="swiper-slide">
+            
+          <p id="p1">洛阳应天门|摄影|风光摄影|shenchao1213 - 原创作品 - 站酷</p>
+
+          <img
+            src="https://img.zcool.cn/community/01b9b560ab0c6e11013eaf706ca5e6.jpg@1280w_1l_2o_100sh.jpg"
+            id="img1"
+          />
+          <div id="d1">
+            <button id="xz">保存图片</button>&emsp; &emsp;&emsp;&emsp;<button
+              onclick="showimg()"
+            >
+              查看图片
+            </button>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <p id="p1">老君山|摄影|风光摄影|shenchao1213 - 原创作品 - 站酷</p>
+          <img
+            src="https://img.zcool.cn/community/01742e5e3e7d63a80120a8957aab03.jpg@2o.jpg"
+          />
+          <div id="d1">
+            <button id="">保存图片</button>&emsp; &emsp;&emsp;&emsp;<button
+              onclick="showimg1()"
+            >
+              查看图片
+            </button>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <p id="p1">老君山|摄影|风光摄影|shenchao1213 - 原创作品 - 站酷</p>
+          <img
+            src="https://img.zcool.cn/community/01d65d5e3e7d5da801216518db736b.jpg@2o.jpg"
+          />
+          <div id="d1">
+            <button id="">保存图片</button>&emsp; &emsp;&emsp;&emsp;<button
+              onclick="showimg2()"
+            >
+              查看图片
+            </button>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <p id="p1">洛阳市区都有哪些标志性建筑</p>
+          <img
+            src="https://img.zcool.cn/community/01ad2b60ab0c6c11013f4720df1851.jpg@1280w_1l_2o_100sh.jpg"
+          />
+          <div id="d1">
+            <button id="">保存图片</button>&emsp; &emsp;&emsp;&emsp;<button
+              onclick="showimg3()"
+            >
+              查看图片
+            </button>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <p id="p1">2020年洛阳最好玩庙会,洛阳有什么好玩的地方推荐</p>
+          <img
+            src="https://img.zcool.cn/community/010a5160ab0c6c11013f472071124b.jpg@1280w_1l_2o_100sh.jpg"
+          />
+          <div id="d1">
+            <button id="">保存图片</button>&emsp; &emsp;&emsp;&emsp;<button
+              onclick="showimg4()"
+            >
+              查看图片
+            </button>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <p id="p1">2019洛阳老街-旅游攻略-门票-地址-问答-游记点评</p>
+          <img
+            src="https://img.zcool.cn/community/01269160ab0c6f11013eaf704cf482.jpg@1280w_1l_2o_100sh.jpg"
+          />
+          <div id="d1">
+            <button id="">保存图片</button>&emsp; &emsp;&emsp;&emsp;<button
+              onclick="showimg5()"
+            >
+              查看图片
+            </button>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <p id="p1">洛阳这个城市曾经领先世界几千年，我们来看看她都有哪些</p>
+          <img
+            src="https://ts1.cn.mm.bing.net/th/id/R-C.8e211b252803f9cde06272ef7e22005d?rik=5qbkW%2bdedRr6Sw&riu=http%3a%2f%2f5b0988e595225.cdn.sohucs.com%2fimages%2f20190723%2f753bd1a73e2f4d8d97b27e45aa226b9a.JPG&ehk=FANFzn%2bBmkiTgbd%2fsN8NWYgzG0PXQ2nYMQP7ww4UfoM%3d&risl=&pid=ImgRaw&r=0"
+          />
+          <div id="d1">
+            <button id="">保存图片</button>&emsp; &emsp;&emsp;&emsp;<button
+              onclick="showimg6()"
+            >
+              查看图片
+            </button>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <p id="p1">洛阳景点top榜-洛阳旅游榜单-洛阳必体验-自助游攻略-攻略</p>
+          <img
+            src="https://youimg1.c-ctrip.com/target/100t180000014thvr963A.jpg"
+          />
+          <div id="d1">
+            <button id="">保存图片</button>&emsp; &emsp;&emsp;&emsp;<button
+              onclick="showimg7()"
+            >
+              查看图片
+            </button>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <p id="p1">洛阳城|摄影|环境/建筑摄影|孫大帥 - 原创作品 - 站酷</p>
+          <img
+            src="https://img.zcool.cn/community/01ba065e29391fa8012165183616d9.jpg@1280w_1l_2o_100sh.jpg"
+          />
+          <div id="d1">
+            <button id="">保存图片</button>&emsp; &emsp;&emsp;&emsp;<button
+              onclick="showimg8()"
+            >
+              查看图片
+            </button>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <p id="p1">洛阳应天门|摄影|风光摄影|shenchao1213 - 原创作品 - 站酷</p>
+          <img
+            src="https://www.wulianwangiot.com/uploadfile/2018/0506/201805061406172749.jpg"
+          />
+          <div id="d1">
+            <button id="">保存图片</button>&emsp; &emsp;&emsp;&emsp;<button
+              onclick="showimg9()"
+            >
+              查看图片
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+
+    <div thumbsSlider="" class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img
+            src="https://img.zcool.cn/community/01b9b560ab0c6e11013eaf706ca5e6.jpg@1280w_1l_2o_100sh.jpg"
+          />
+          <p id="p2">洛阳应天门</p>
+        </div>
+
+        <div class="swiper-slide">
+          <img
+            src="https://img.zcool.cn/community/01742e5e3e7d63a80120a8957aab03.jpg@2o.jpg"
+          />
+          <p id="p2">老君山</p>
+        </div>
+        <div class="swiper-slide">
+          <img
+            src="https://img.zcool.cn/community/01d65d5e3e7d5da801216518db736b.jpg@2o.jpg"
+          />
+          <p id="p2">老君山</p>
+        </div>
+        <div class="swiper-slide">
+          <img
+            src="https://img.zcool.cn/community/01ad2b60ab0c6c11013f4720df1851.jpg@1280w_1l_2o_100sh.jpg"
+          />
+          <p id="p2">洛阳应天门</p>
+        </div>
+        <div class="swiper-slide">
+          <img
+            src="https://img.zcool.cn/community/010a5160ab0c6c11013f472071124b.jpg@1280w_1l_2o_100sh.jpg"
+          />
+          <p id="p2">洛阳应天门</p>
+        </div>
+        <div class="swiper-slide">
+          <img
+            src="https://img.zcool.cn/community/01269160ab0c6f11013eaf704cf482.jpg@1280w_1l_2o_100sh.jpg"
+          />
+          <p id="p2">洛阳应天门</p>
+        </div>
+        <div class="swiper-slide">
+          <img
+            src="https://ts1.cn.mm.bing.net/th/id/R-C.8e211b252803f9cde06272ef7e22005d?rik=5qbkW%2bdedRr6Sw&riu=http%3a%2f%2f5b0988e595225.cdn.sohucs.com%2fimages%2f20190723%2f753bd1a73e2f4d8d97b27e45aa226b9a.JPG&ehk=FANFzn%2bBmkiTgbd%2fsN8NWYgzG0PXQ2nYMQP7ww4UfoM%3d&risl=&pid=ImgRaw&r=0"
+          />
+          <p id="p2">洛阳应天门</p>
+        </div>
+        <div class="swiper-slide">
+          <p id="p2">洛阳应天门</p>
+          <img
+            src="https://youimg1.c-ctrip.com/target/100t180000014thvr963A.jpg"
+          />
+        </div>
+        <div class="swiper-slide">
+          <p id="p2">洛阳应天门</p>
+          <img
+            src="https://img.zcool.cn/community/01ba065e29391fa8012165183616d9.jpg@1280w_1l_2o_100sh.jpg"
+          />
+        </div>
+        <div class="swiper-slide">
+          <p id="p2">洛阳应天门</p>
+          <img
+            src="https://www.wulianwangiot.com/uploadfile/2018/0506/201805061406172749.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Swiper JS -->
+    <script src="./swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        spaceBetween: 10,
+        slidesPerView: 4,
+        freeMode: true,
+        watchSlidesProgress: true,
+      });
+      var swiper2 = new Swiper(".mySwiper2", {
+        spaceBetween: 10,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        autoplay: {
+          delay: 2500,
+          disableOnInteraction: false,
+        },
+        thumbs: {
+          swiper: swiper,
+        },
+      });
+      function showimg() {
+        window.open(
+          "https://img.zcool.cn/community/01b9b560ab0c6e11013eaf706ca5e6.jpg@1280w_1l_2o_100sh.jpg"
+        );
+      }
+      function showimg1() {
+        window.open(
+          "https://img.zcool.cn/community/01742e5e3e7d63a80120a8957aab03.jpg@2o.jpg"
+        );
+      }
+      function showimg2() {
+        window.open(
+          "https://img.zcool.cn/community/01d65d5e3e7d5da801216518db736b.jpg@2o.jpg"
+        );
+      }
+      function showimg3() {
+        window.open(
+          "https://img.zcool.cn/community/01ad2b60ab0c6c11013f4720df1851.jpg@1280w_1l_2o_100sh.jpg"
+        );
+      }
+      function showimg4() {
+        window.open(
+          "https://img.zcool.cn/community/010a5160ab0c6c11013f472071124b.jpg@1280w_1l_2o_100sh.jpg"
+        );
+      }
+      function showimg5() {
+        window.open(
+          "https://img.zcool.cn/community/01269160ab0c6f11013eaf704cf482.jpg@1280w_1l_2o_100sh.jpg"
+        );
+      }
+      function showimg6() {
+        window.open(
+          "https://ts1.cn.mm.bing.net/th/id/R-C.8e211b252803f9cde06272ef7e22005d?rik=5qbkW%2bdedRr6Sw&riu=http%3a%2f%2f5b0988e595225.cdn.sohucs.com%2fimages%2f20190723%2f753bd1a73e2f4d8d97b27e45aa226b9a.JPG&ehk=FANFzn%2bBmkiTgbd%2fsN8NWYgzG0PXQ2nYMQP7ww4UfoM%3d&risl=&pid=ImgRaw&r=0"
+        );
+      }
+      function showimg7() {
+        window.open(
+          "https://youimg1.c-ctrip.com/target/100t180000014thvr963A.jpg"
+        );
+      }
+      function showimg8() {
+        window.open(
+          "https://img.zcool.cn/community/01ba065e29391fa8012165183616d9.jpg@1280w_1l_2o_100sh.jpg"
+        );
+      }
+      function showimg9() {
+        window.open(
+          "https://www.wulianwangiot.com/uploadfile/2018/0506/201805061406172749.jpg"
+        );
+      }
+      //    function downfile(){
+      //     console.log(213);
+      //     var url="https://img.zcool.cn/community/01b9b560ab0c6e11013eaf706ca5e6.jpg@1280w_1l_2o_100sh.jpg.zlp"
+      //     window.location.href=url
+      //    }
+    //   $("#xz").click(function () {
+    //     var strList = $(".swiper-slide img").attr("src");
+    //     var link = document.createElement("a");
+    //     link.download = strList.substring(strList.lastIndexOf("/") + 1);
+    //     link.href = strList;
+    //     link.click();
+    //   });
+    </script>
+  </body>
+</html>

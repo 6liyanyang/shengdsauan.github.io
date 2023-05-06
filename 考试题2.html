@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+ <!-- 引入 jQuery.js -->
+ <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.js"></script>
+ <!-- 引入 echarts.js -->
+ <script src="./echarts.min.js"></script>
+<body>
+    <style>
+      #main {
+        margin-top: 50px;
+        width: 900px;
+        height: 500px;
+        position: absolute;
+        left: 200px;
+      }
+      #BUTTON {
+        width: 800px;
+        position: absolute;
+        left: 700px;
+      }
+      #BUTTON button {
+        border: 0;
+        width: 90px;
+        height: 30px;
+        border-radius: 50px;
+      }
+      #LEFT,
+      #main {
+        display: inline-block;
+      }
+      #LEFT {
+        position: absolute;
+        top: 200px;
+      }
+      #LEFT-1 {
+        width: 150px;
+        height: 80px;
+        background-color: rgba(93, 112, 126, 0.5);
+        border-radius: 8px;
+      }
+      #LEFT-2 {
+        width: 150px;
+        height: 80px;
+        background-color: rgba(71, 81, 88, 0.5);
+        border-radius: 8px;
+        margin-top: 10px;
+      }
+      .color {
+        background-color: rgb(85, 101, 142);
+      }
+    </style>
+     <div id="TWO">
+        <div id="LEFT">
+          <div id="LEFT-1">
+            <div
+              style="
+                width: 10px;
+                height: 10px;
+                background-color: rgb(57, 107, 134);
+                display: inline-block;
+                margin-left: 10px;
+              "
+            ></div>
+            <span>pv(总浏览量)</span>
+            <p style="padding-left: 20px">0</p>
+          </div>
+          <div id="LEFT-2">
+            <div
+              style="
+                width: 10px;
+                height: 10px;
+                background-color: rgb(65, 148, 65);
+                display: inline-block;
+                margin-left: 10px;
+              "
+            ></div>
+            <span>uv(总访问量)</span>
+            <p style="padding-left: 20px">0</p>
+          </div>
+        </div>
+        <div id="main"></div>
+        <div id="BUTTON">
+          <button onclick="day()" class="color">今日</button>
+          <button onclick="weekday()">7日</button>
+          <button onclick="mouthday()">30日</button>
+        </div>
+      </div>
+      <script>
+         const dataToday = [
+        ["00:00", 10, 21],
+        ["01:00", 20, 15],
+        ["02:00", 120, 22],
+        ["03:00", 80, 22],
+        ["04:00", 60, 16],
+        ["05:00", 30, 11],
+        ["06:00", 130, 27],
+        ["07:00", 20, 44],
+        ["08:00", 10, 21],
+        ["09:00", 5, 21],
+        ["10:00", 9, 21],
+        ["11:00", 100, 21],
+        ["12:00", 290, 121],
+        ["13:00", 90, 152],
+        ["14:00", 20, 121],
+        ["15:00", 130, 12],
+        ["16:00", 550, 13],
+        ["17:00", 155, 48],
+        ["18:00", 153, 23],
+        ["19:00", 12, 87],
+        ["20:00", 45, 51],
+        ["21:00", 76, 12],
+        ["22:00", 87, 21],
+        ["23:00", 10, 41],
+      ];
+      const data = [
+        ["2000-06-05", 116, 201],
+        ["2000-06-06", 129, 125],
+        ["2000-06-07", 135, 212],
+        ["2000-06-08", 86, 121],
+        ["2000-06-09", 73, 41],
+        ["2000-06-10", 85, 121],
+        ["2000-06-11", 73, 267],
+        ["2000-06-12", 68, 281],
+        ["2000-06-13", 92, 241],
+        ["2000-06-14", 130, 221],
+        ["2000-06-15", 245, 211],
+        ["2000-06-16", 139, 241],
+        ["2000-06-17", 115, 461],
+        ["2000-06-18", 111, 71],
+        ["2000-06-19", 309, 181],
+        ["2000-06-20", 206, 331],
+        ["2000-06-21", 137, 91],
+        ["2000-06-22", 128, 71],
+        ["2000-06-23", 85, 121],
+        ["2000-06-24", 94, 41],
+        ["2000-06-25", 71, 88],
+        ["2000-06-26", 106, 51],
+        ["2000-06-27", 84, 32],
+        ["2000-06-28", 93, 78],
+        ["2000-06-29", 85, 56],
+        ["2000-06-30", 73, 31],
+        ["2000-07-01", 83, 11],
+        ["2000-07-02", 125, 51],
+        ["2000-07-03", 107, 81],
+        ["2000-07-04", 82, 54],
+        ["2000-07-05", 44, 32],
+      ];
+
+      let dateList;
+      let vaLIST;
+      let vaLIST2;
+      let weekData = [];
+   
+      let sum1 = 0;
+
+      let sum2 = 0;
+      var chartDom = document.getElementById("main");
+      var myChart = echarts.init(chartDom);
+      var option;
+      $(document).ready(function () {
+        day();
+        dataToday.map(function (data) {
+          sum1 += data[2];
+          sum2 += data[1];
+        });
+        $("#LEFT-2 p").html(sum1);
+        $("#LEFT-1 p").html(sum2);
+      });
+      $("#BUTTON").on("click", "button", function () {
+        $(this).addClass("color");
+        for (const item of $("#BUTTON button").not(this)) {
+          $(item).removeClass("color");
+        }
+        if ($(this).html() == "今日") {
+          dataToday.map(function (data) {
+            sum1 += data[2];
+            sum2 += data[1];
+          });
+        
+        } else if ($(this).html() == "7日") {
+          let data1 = [];
+          for (let i = 0; i < 7; i++) {
+            data1.push(data[i]);
+          }
+          data1.map(function (data) {
+            sum1 += data[2];
+            sum2 += data[1];
+          });
+        } else if ($(this).html() == "30日") {
+          data.map(function (data) {
+            sum1 += data[2];
+            sum2 += data[1];
+          });
+        }
+        $("#LEFT-2 p").html(sum1);
+        $("#LEFT-1 p").html(sum2);
+      });
+      function day() {
+        dateList = dataToday.map(function (item) {
+          return item[0];
+        });
+        vaLIST = dataToday.map(function (item) {
+          return item[1];
+        });
+        vaLIST2 = dataToday.map(function (item) {
+          return item[2];
+        });
+        Echarts(dateList, vaLIST);
+      }
+      function yesterday() {
+        dateList = dataToday.map(function (item) {
+          return item[0];
+        });
+        //第一条折线
+        vaLIST = dataToday.map(function (item) {
+          return item[1];
+        });
+        //第二条折线
+        vaLIST2 = dataToday.map(function (item) {
+          return item[2];
+        });
+        Echarts(dateList, vaLIST);
+      }
+      function weekday() {
+        for (let i = 0; i < 7; i++) {
+          weekData.push(data[i]);
+        }
+        dateList = weekData.map(function (item) {
+          return item[0];
+        });
+        vaLIST = weekData.map(function (item) {
+          return item[1];
+        });
+        vaLIST2 = weekData.map(function (item) {
+          return item[2];
+        });
+        Echarts(dateList, vaLIST);
+      }
+      function mouthday() {
+        dateList = data.map(function (item) {
+          return item[0];
+        });
+        vaLIST = data.map(function (item) {
+          return item[1];
+        });
+        vaLIST2 = data.map(function (item) {
+          return item[2];
+        });
+        option = {
+            grid: {
+          x:50,
+          x2: 40,
+          y: 40,
+          y2:20
+        },
+          visualMap: [
+            {
+              show: false,
+              type: "continuous",
+              seriesIndex: 0,
+              min: 0,
+              max: 400,
+            },
+          ],
+          title: [
+            {
+              left: "center",
+              text: "浏览量",
+            },
+          ],
+          tooltip: {
+            trigger: "axis",
+          },
+          xAxis: [
+            {
+              data: dateList,
+            },
+          ],
+          yAxis: [
+            {
+              type: "value",
+              axisLabel: {
+                formatter: (value, index) => {
+                  return `${value / 1000}k`;
+                },
+              },
+            },
+          ],
+          series: [
+            {
+              type: "line",
+              showSymbol: true,
+              data: vaLIST,
+              lineStyle:{
+                color:"orange"
+              }
+            },
+            {
+              type: "line",
+              showSymbol: true,
+              data: vaLIST2,
+              lineStyle:{
+                color:"yellow"
+              }
+            },
+          ],
+        };
+        option && myChart.setOption(option);
+      }
+      function Echarts(dateList, vaLIST) {
+        option = {
+            grid: {
+          x:50,
+          x2: 20,
+          y: 40,
+          y2:20
+        },
+          visualMap: [
+            {
+              show: false,
+              type: "continuous",
+              seriesIndex: 0,
+              min: 0,
+              max: 400,
+            },
+            
+          ],
+          title: [
+            {
+              left: "center",
+              text: "浏览量",
+            },
+          ],
+          tooltip: {
+            trigger: "axis",
+          },
+          xAxis: [
+            {
+              data: dateList,
+            },
+          ],
+          yAxis: [{}],
+          series: [
+            {
+              type: "line",
+              showSymbol: true,
+              data: vaLIST,
+              lineStyle:{
+                color:"pink"
+              }
+              
+            },
+            {
+              type: "line",
+              showSymbol: true,
+              data: vaLIST2,
+              lineStyle:{
+                color:"lightblue"
+              }
+            },
+          ],
+        };
+        option && myChart.setOption(option);
+      }
+      </script>
+</body>
+</html>
