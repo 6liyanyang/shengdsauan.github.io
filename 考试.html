@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./echer.css"/>
+    <script src="./echarts.min.js"></script>
+    <script src="./jquery.js"></script>
+</head>
+<body>
+     <div id="box">
+        <div id="box1">
+    <h3>待办事项</h3>
+    <ul class="ul1">
+        <li>
+            <p class="p1">待发货订单</p>
+           <span id="sp">单位(笔)</span>
+           <h1 class="h1">4</h1>
+        </li>
+        <li>
+            <p class="p1">待处理售后</p>
+            <span id="sp">单位(笔)</span>
+            <h1 class="h2">0</h1>
+        </li>
+        <li>
+            <p class="p1">待付款订单</p>
+            <span id="sp">单位(笔)</span>
+            <h1 class="h3">113</h1>
+        </li>
+        <li>
+            <p class="p1">待补货商品</p>
+            <span id="sp">单位(笔)</span>
+            <h1 class="h4">0</h1>
+        </li>
+        <li>
+            <p class="p1">待审核会员</p>
+            <span id="sp">单位(笔)</span>
+            <h1 class="h5">4</h1>
+        </li>
+        <li>
+            <p class="p1">待审核佣金</p>
+            <span id="sp">单位(笔)</span>
+            <h1 class="h6">848.19</h1>
+        </li>
+    </ul>
+    <div>
+  <div id="box2">
+        <h2>新增会员</h2>
+        <button id="day" onclick="day()" class="btn">今日</button>
+        <button id="weekday" onclick="weekday()"  class="btn">7日</button>
+        <button id="mouthday" onclick="mouthday()" class="btn">近30日</button> 
+
+    </div>
+    <div id="box3">
+
+    </div>
+    <br>
+    <div id="box2">
+        <h2>新增订单</h2>
+        <!-- <button id="day1" onclick="day1()" class="color">今日</button>
+        <button id="weekday1" onclick="weekday1()">7日</button>
+        <button id="mouthday1" onclick="mouth1()">30日</button> -->
+        <button id="day1" class="bttn"  onclick="ttn3()">今天</button>
+        <button id="day1" class="bttn"  onclick="ttn2()">昨天</button>
+        <button id="weekday1" class="bttn"  onclick="ttn4()">近7天</button>
+        <button id="mouthday1" class="bttn"  onclick="ttn1()">近30天</button>
+
+    </div>
+    </div>
+  
+    <div id="box4">
+        </div>
+        <div id="box5">
+          <h2 class="h10">运营数据</h2>
+          <input type="date" name="" id="da1">
+          <input type="date" name="" id="da1">
+          <button id="day2" class="bttn1"  onclick="stn1()">今天</button>
+          <button id="day2" class="bttn1" onclick="stn2()">昨天</button>
+          <button id="weekday2" class="bttn1"  onclick="stn3()">近7天</button>
+          <button id="mouthday2" class="bttn1"  onclick="btn4()">近30天</button>
+          <div id="box6">
+            <ul class="ul2">
+              <li>
+                  <p class="p1">成交金额(元)</p>
+                 <span id="sp1">单位(笔)</span>
+                 <h1 class="h7">796</h1>
+              </li>
+              <li>
+                  <p class="p1">退款金额(元)</p>
+                  <span id="sp1">单位(笔)</span>
+                  <h1 class="h7">0</h1>
+              </li>
+              <li>
+                  <p class="p1">支付订单(元)</p>
+                  <span id="sp1">单位(笔)</span>
+                  <h1 class="h7">4</h1>
+              </li>
+              <li>
+                  <p class="p1">支付人数(人)</p>
+                  <span id="sp1">单位(笔)</span>
+                  <h1 class="h7">4</h1>
+              </li>
+              <li>
+                  <p class="p1">客订单(元)</p>
+                  <span id="sp1">单位(笔)</span>
+                  <h1 class="h7">199</h1>
+              </li>
+              <li>
+                  <p class="p1">笔单价(元)</p>
+                  <span id="sp1">单位(笔)</span>
+                  <h1 class="h7">199</h1>
+              </li>
+          </ul>
+          </div>
+          <div id="box7"></div>
+        </div>
+     </div>
+     </div>
+     
+     <script>
+       const dataToday = [
+        ["00:00", 10, 21],
+        ["03:00", 20, 15],
+        ["06:00", 10, 22],
+        ["09:00", 30, 22],
+        ["12:00", 40, 16],
+        ["15:00", 30, 11],
+        ["18:00", 40, 27],
+        ["21:00", 20, 44],
+      ];
+      const data = [
+        ["00:00", 22, 21],
+        ["03:00", 20, 15],
+        ["06:00", 10, 22],
+        ["09:00", 40, 22],
+        ["12:00", 20, 16],
+        ["15:00", 10, 11],
+        ["18:00", 10, 27],
+        ["21:00", 20, 44],
+      ];
+
+      let dataList;
+      let vaLIST;
+      let vaLIST2;
+      let weekdata = [];
+      var chartDom = document.getElementById("box3");
+      var myChart = echarts.init(chartDom);
+      var option;
+      $(document).ready(function () {
+        day();
+      });
+      function day() {
+        dateList = dataToday.map(function (item) {
+          return item[0];
+        });
+        vaLIST = dataToday.map(function (item) {
+          return item[1];
+        });
+        vaLIST2 = dataToday.map(function (item) {
+          return item[2];
+        });
+        Echarts(dateList, vaLIST);
+      }
+      function yesterday() {
+        dateList = dataToday.map(function (item) {
+          return item[0];
+        });
+        //第一条折线
+        vaLIST = dataToday.map(function (item) {
+          return item[1];
+        });
+        //第二条折线
+        vaLIST2 = dataToday.map(function (item) {
+          return item[2];
+        });
+        Echarts(dateList, vaLIST);
+      }
+      function weekday() {
+        for (let i = 0; i < 7; i++) {
+          weekdata.push(data[i]);
+        }
+        dateList = weekdata.map(function (item) {
+          return item[0];
+        });
+        vaLIST = weekdata.map(function (item) {
+          return item[1];
+        });
+        vaLIST2 = weekdata.map(function (item) {
+          return item[2];
+        });
+        Echarts(dateList, vaLIST);
+      }
+      function mouthday() {
+
+        dateList = data.map(function (item) {
+          return item[0];
+        });
+        vaLIST = data.map(function (item) {
+          return item[1];
+        });
+        vaLIST2 = data.map(function (item) {
+          return item[2];
+          // Echarts(dateList, vaLIST);
+        });
+        option = {
+
+          visualMap: [
+            {
+              show: false,
+              type: "continuous",
+              seriesIndex: 0,
+              min: 0,
+              max: 300,
+            },
+          ],
+          tooltip: {
+            trigger: "axis",
+          },
+          xAxis: [
+            {
+              data: dateList,
+            },
+          ],
+          yAxis: [
+            {
+              type: "value",
+              axisLabel: {
+                formatter: (value, index) => {
+                  return `${value}`;
+                },
+              },
+            },
+          ],
+          series: [
+            {
+              type: "line",
+              showSymbol: true,
+              data: vaLIST,
+              lineStyle:{
+                color:"orange"
+              }
+            },
+            {
+              type: "line",
+              showSymbol: true,
+              data: vaLIST2,
+              lineStyle:{
+                color:"yellow"
+              }
+            },
+          ],
+        };
+        option && myChart.setOption(option);
+      }
+      function Echarts(dateList, vaLIST) {
+        option = {
+            grid: {
+          x:50,
+          x2: 20,
+          y: 40,
+          y2:20
+        },
+          visualMap: [
+            {
+              show: false,
+              type: "continuous",
+              seriesIndex: 0,
+              min: 0,
+              max: 300,
+            },
+            
+          ],
+          title: [
+            {
+              left: "center",
+            },
+          ],
+          tooltip: {
+            trigger: "axis",
+          },
+          xAxis: [
+            {
+              data: dateList,
+            },
+          ],
+          yAxis: [{}],
+          series: [
+            {
+              type: "line",
+              showSymbol: true,
+              data: vaLIST,
+              lineStyle:{
+                color:"pink"
+              }
+              
+            },
+            {
+              type: "line",
+              showSymbol: true,
+              data: vaLIST2,
+              lineStyle:{
+                color:"lightblue"
+              }
+            },
+          ],
+        };
+        option && myChart.setOption(option);
+      }
+
+    
+
+      </script>
+      <script>
+         function ttn2() {
+                let chartDom22 = document.getElementById("box4");
+                let myChart22 = echarts.init(chartDom22);
+                let option22;
+                option22 = {
+                    tooltip: {},
+                    legend: {
+                        data: ["PV", "UV"],
+                    },
+                    xAxis: {
+                        type: "category",
+                        data: ["00.00", "02.00", "04.00", "06.00", "08.00", "10.00", "12.00"],
+                    },
+                    yAxis: {
+                        type: "value",
+                    },
+                    series: [
+                        {
+                            name: "PV",
+                            data: [5, 0, 12, 60, 200, 40, 13],
+                            type: "bar",
+                            smooth: true,
+                        },
+                        {
+                            name: "UV",
+                            data: [5, 0, 12, 160, 200, 40, 13 ],
+                            type: "bar",
+                            smooth: true,
+                        },
+                    ],
+                };
+                myChart22.setOption(option22);
+            }
+            function ttn3() {
+                let chartDom22 = document.getElementById("box4");
+                let myChart22 = echarts.init(chartDom22);
+                let option22;
+                option22 = {
+                    tooltip: {},
+                    legend: {
+                        data: ["PV", "UV"],
+                    },
+                    xAxis: {
+                        type: "category",
+                        data: [
+                            "2023-04-30",
+                            "2023-05-01",
+                            "2023-05-02",
+                            "2023-05-03",
+                            "2023-05-04",
+                            "2023-05-05",
+                            "2023-05-06",
+                        ],
+                    },
+                    yAxis: {
+                        type: "value",
+                    },
+                    series: [
+                        {
+                            name: "PV",
+                            data: [5, 0, 12, 60, 600, 40, 13],
+                            type: "bar",
+                            smooth: true,
+                        },
+                        {
+                            name: "UV",
+                            data: [20, 80, 20, 16, 100, 23, 23],
+                            type: "bar",
+                            smooth: true,
+                        },
+                    ],
+                };
+                myChart22.setOption(option22);
+            }
+            function ttn4() {
+    
+                let chartDom22 = document.getElementById("xia22");
+                let myChart22 = echarts.init(chartDom22);
+                let option22;
+                option22 = {
+                    tooltip: {},
+                    legend: {
+                        data: ["PV", "UV"],
+                    },
+                    xAxis: {
+                        type: "category",
+                        data: [
+                            "2023-04-07",
+                            "2023-04-11",
+                            "2023-04-19",
+                            "2023-04-23",
+                            "2023-04-27",
+                            "2023-05-01",
+                            "2023-05-05",
+                        ],
+                    },
+                    yAxis: {
+                        type: "value",
+                        axisLine: { onZero: false },
+                        axisLabel: {
+                            formatter: "{value} k",
+                        },
+                        boundaryGap: false,
+                        data: ["0", "10"],
+                    },
+                    series: [
+                        {
+                            name: "PV",
+                            data: [5, 0, 12, 60, 1000, 40, 13],
+                            type: "bar",
+                            smooth: true,
+                        },
+                        {
+                            name: "UV",
+                            data: [20, 80, 26, 16, 300, 23, 23],
+                            type: "bar",
+                            smooth: true,
+                        },
+                    ],
+                };
+                myChart22.setOption(option22);
+            }
+            function ttn1() {
+    
+                let chartDom22 = document.getElementById("box4");
+                let myChart22 = echarts.init(chartDom22);
+                let option22;
+                option22 = {
+                    tooltip: {},
+                    legend: {
+                        data: ["PV", "UV"],
+                    },
+                    xAxis: {
+                        type: "category",
+                        data: ["00.00", "02.00", "04.00", "06.00", "08.00", "10.00", "12.00"],
+                    },
+                    yAxis: {
+                        type: "value",
+                    },
+                    series: [
+                        {
+                            name: "PV",
+                            data: [5, 80, 12, 60, 0, 40, 13],
+                            type: "bar",
+                            smooth: true,
+                        },
+                        {
+                            name: "UV",
+                            data: [5, 80, 12,80, 50, 40, 13],
+                            type: "bar",
+                            smooth: true,
+                        },
+                    ],
+                };
+                myChart22.setOption(option22);
+            }
+            let chartDom22 = document.getElementById("box4");
+            let myChart22 = echarts.init(chartDom22);
+            let option22;
+            option22 = {
+                tooltip: {},
+                legend: {
+                },
+                xAxis: {
+                    type: "category",
+                    data: ["00.00", "02.00", "04.00", "06.00", "08.00", "10.00", "12.00"],
+                },
+                yAxis: {
+                    type: "value",
+                },
+                series: [
+                    {
+                        data: [5, 80, 12, 600, 10, 40, 13],
+                        type: "bar",
+                        smooth: true,
+                    },
+                    {
+                        data: [],
+                        type: "bar",
+                        smooth: true,
+                    },
+                ],
+            };
+            myChart22.setOption(option22);
+      </script>
+          <script>
+            function stn2() {
+                let chartDom31 = document.getElementById("box7");
+                let myChart31 = echarts.init(chartDom31);
+                let option31;
+                option31 = {
+                    tooltip: {},
+                    legend: {
+  
+                    },
+                    xAxis: {
+                        type: "category",
+                        data: ["00.00", "02.00", "04.00", "06.00", "08.00", "10.00", "12.00"],
+                    },
+                    yAxis: {
+                        type: "value",
+                    },
+                    series: [
+                        {
+                            data: [5, 0, 12, 60, 200, 40, 13],
+                            type: "line",
+                            smooth: true,
+                        },
+                        {
+                            data: [],
+                            type: "line",
+                            smooth: false,
+                        },
+                    ],
+                };
+                myChart31.setOption(option31);
+            }
+            function stn3() {
+                let chartDom31 = document.getElementById("box7");
+                let myChart31 = echarts.init(chartDom31);
+                let option31;
+                option31 = {
+                    tooltip: {},
+                    legend: {
+                    },
+                    xAxis: {
+                        type: "category",
+                        data: [
+                            "2023-04-30",
+                            "2023-05-01",
+                            "2023-05-02",
+                            "2023-05-03",
+                            "2023-05-04",
+                            "2023-05-05",
+                            "2023-05-06",
+                        ],
+                    },
+                    yAxis: {
+                        type: "value",
+                    },
+                    series: [
+                        {
+                            data: [5, 0, 1, 40, 600, 40, 13],
+                            type: "line",
+                            smooth: false,
+                        },
+                        {
+                            data: [20, 40, 20, 16, 100, 23, 23],
+                            type: "line",
+                            smooth: false,
+                        },
+                    ],
+                };
+                myChart31.setOption(option31);
+            }
+            function stn4() {
+                let chartDom31 = document.getElementById("box7");
+                let myChart31 = echarts.init(chartDom31);
+                let option31;
+                option31 = {
+                    tooltip: {},
+                    legend: {
+                    },
+                    xAxis: {
+                        type: "category",
+                        data: [
+                            "2023-04-07",
+                            "2023-04-11",
+                            "2023-04-19",
+                            "2023-04-23",
+                            "2023-04-27",
+                            "2023-05-01",
+                            "2023-05-05",
+                        ],
+                    },
+                    yAxis: {
+                        type: "value",
+                        axisLine: { onZero: false },
+                        axisLabel: {
+                            formatter: "{value} k",
+                        },
+                        boundaryGap: false,
+                        data: ["0", "10"],
+                    },
+                    series: [
+                        {
+
+                            data: [5, 0, 100, 60, 1000, 40, 13],
+                            type: "line",
+                            smooth: true,
+                        },
+                        {
+
+                            data: [20, 90, 26, 16, 300, 23, 23],
+                            type: "line",
+                            smooth: true,
+                        },
+                    ],
+                };
+                myChart31.setOption(option31);
+            }
+            function stn1() {
+                let chartDom31 = document.getElementById("box7");
+                let myChart31 = echarts.init(chartDom31);
+                let option31;
+                option31 = {
+                    tooltip: {},
+                    legend: {
+                    },
+                    xAxis: {
+                        type: "category",
+                        data: ["00.00", "02.00", "04.00", "06.00", "08.00", "10.00", "12.00"],
+                    },
+                    yAxis: {
+                        type: "value",
+                    },
+                    series: [
+                        {
+  
+                            data: [5, 80, 12, 60, 0, 40, 13],
+                            type: "line",
+                            smooth: true,
+                        },
+                        {
+                            data: [],
+                            type: "line",
+                            smooth: true,
+                        },
+                    ],
+                };
+                myChart31.setOption(option31);
+            }
+            let chartDom31 = document.getElementById("box7");
+            let myChart31 = echarts.init(chartDom31);
+            let option31;
+            option31 = {
+                tooltip: {},
+                legend: {
+                },
+                xAxis: {
+                    type: "category",
+                    data: ["00.00", "02.00", "04.00", "06.00", "08.00", "10.00", "12.00"],
+                },
+                yAxis: {
+                    type: "value",
+                },
+                series: [
+                    {
+    
+                        data: [5, 80, 12, 60, 0, 40, 13],
+                        type: "line",
+                        smooth: true,
+                    },
+                    {
+                        type: "line",
+                        smooth: true,
+                    },
+                ],
+            };
+            myChart31.setOption(option31);
+        </script>
+</body>
+</html>
