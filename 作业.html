@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.staticfile.org/vue/2.7.0/vue.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.js"></script>
+  </head>
+  <body>
+    <style>
+      button {
+        margin: 20px;
+        width: 69px;
+        height: 24px;
+        background-color: rgb(122, 187, 57);
+        border: 1px solid rgb(122, 187, 57);
+        color: white;
+      }
+      .b1 {
+        width: 300px;
+        height: 200px;
+        background-color: rgb(37, 167, 210);
+        color: white;
+        position: relative;
+        left: 20px;
+      }
+      #formbox {
+        width: 400px;
+        height: 300px;
+        background-color: whitesmoke;
+        position: absolute;
+        left: 480px;
+        text-align: center;
+      }
+      #sp {
+        position: relative;
+      }
+      .add {
+        width: 42px;
+        height: 24px;
+        border: 1px solid brown;
+        color: white;
+        background-color: brown;
+      }
+      .xiu {
+        width: 42px;
+        height: 24px;
+        border: 1px solid skyblue;
+        color: white;
+        background-color: skyblue;
+      }
+      .cha {
+        width: 42px;
+        height: 24px;
+        border: 1px solid pink;
+        color: white;
+        background-color: pink;
+      }
+      #zy thead tr {
+        background-image: linear-gradient(
+          to right,
+          #33a0d6,
+          #53adca,
+          #76bbbe,
+          #7abcbc,
+          #7abcbc
+        );
+      }
+      .bianshe{
+        background-color: lightblue !important;
+      }
+    </style>
+    <div id="zy">
+      <div>
+        <button
+          v-for="(val,index) in arrTabs"
+          @click="indexcode=index"
+          :class="indexcode==index?'red':''"
+        >
+          {{val.title}}
+        </button>
+      </div>
+      <div v-for="(val,index) in arrTabs" v-if="indexcode==index" class="b1">
+        {{val.contents}}
+      </div>
+      <hr />
+      <div>
+        <div id="formbox" v-if="showfun">
+          <form>
+            姓名:<input type="text" v-model="title" /> <br /><br />
+            年龄:<input type="text" v-model="desc" /> <br /><br />
+            <input type="button" :value="str" v-on:click="addItem()" />
+            <input type="button" value="取消" v-on:click="edds()" />
+          </form>
+          <br />
+        </div>
+        <button v-on:click="adds()">添加</button>
+        <table
+          style="text-align: center; width: 1200px; border-collapse: collapse"
+          border="1"
+        >
+          <thead>
+            <tr>
+                <th>#</th>
+              <th>姓名</th>
+              <th>年龄</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(todoItem,index) in todolist"
+            v-bind:style="index%2==0?'background-color:pink':'background-color:white'"
+            @mouseover="bianse(index)" v-bind:class="index==indexs?'bianshe':''" >
+                <td>{{index+1}}</td>
+              <td>{{todoItem.title}}</td>
+              <td>{{todoItem.desc}}</td>
+              <td>
+                <input
+                  type="button"
+                  class="add"
+                  value="删除"
+                  @click="remove(index)"
+                />
+                <input
+                  type="button"
+                  class="xiu"
+                  value="修改"
+                  @click="xiugai(index)"
+                />
+                <input
+                type="button"
+                class="cha"
+                value="查看"
+                @click="chakan(index)"
+              />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script></script>
+    <script type="text/javascript">
+      var TodoItem = function (title, desc,index) {
+        this.title = title;
+        this.desc = desc;
+      };
+      new Vue({
+      
+        el: "#zy",
+        data: {
+          indexs:-1,
+            str:'新增',
+            index:0,
+          indexcode: 0,
+          todolist: [
+            { title: "狗磊", desc: 12 },
+            { title: "老八", desc: 12 },
+            { title: "老六", desc: 12 },
+          ],
+          title: "",
+          desc: "",
+          showfun: false,
+          arrTabs: [
+            { title: "军事新闻", contents: "1949年，中华人民共和国今天成立了" },
+            {
+              title: "娱乐新闻",
+              contents: "萧敬腾，来北京了今天看来是要下雨了",
+            },
+            { title: "科技新闻", contents: "前端是世界上最好的语言" },
+          ],
+        },
+        methods: {
+          addItem() {
+            if(this.str=="新增"){
+            this.todolist.push(new TodoItem(this.title, this.desc));
+            this.title = this.desc = "";
+            // this.title = this.desc = "";
+
+            }else{
+              this.todolist[this.index].title=this.title
+              this.todolist[this.index].desc=this.desc
+              this.str="新增"
+
+            }
+           this.showfun = false;
+          },
+          remove(index) {
+            if(confirm('确定要删除？')){
+              this.todolist.splice(index, 1);
+            }
+          },
+          xiugai(index) {
+            this.showfun = true;
+            this.str="修改"
+            this.index=index
+            this.title=this.todolist[index].title,
+            this.desc=this.todolist[index].desc
+          },
+          chakan(index) {
+            this.showfun = true;
+            
+            this.title=this.todolist[index].title,
+            this.desc=this.todolist[index].desc
+          },
+          bianse(index){
+            console.log(index);
+            this.indexs=index
+          },
+          adds() {
+            this.showfun = true;
+          },
+          edds() {
+            this.showfun = false;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
